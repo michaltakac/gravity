@@ -19,7 +19,6 @@ ecmascript              # Enable ECMAScript2015+ syntax in app code
 check
 audit-argument-checks
 skeleton:skeleton
-less
 accounts-base
 accounts-password
 useraccounts:unstyled
@@ -32,3 +31,13 @@ reactive-var
 momentjs:moment
 reywood:publish-composite
 fortawesome:fontawesome
+utilities:avatar
+tmeasday:publish-counts
+verron:autosize
+mizzao:user-status
+dburles:eslint
+kevohagan:sweetalert
+mizzao:autocomplete
+markdown
+simple:highlight.js
+less

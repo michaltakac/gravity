@@ -1,10 +1,18 @@
 UI.registerHelper('simpleFormat', (text) => {
+  if (!text) {
+    return;
+  }
   var carriage_returns, linkify, newline, paragraphs;
   linkify = (string) => {
     var re;
-    re = ["\\b((?:https?|ftp)://[^\\s\"'<>]+)\\b", "\\b(www\\.[^\\s\"'<>]+)\\b", "\\b(\\w[\\w.+-]*@[\\w.-]+\\.[a-z]{2,6})\\b", "#([a-z0-9]+)"];
+    re = [
+      "\\b((?:https?|ftp)://[^\\s\"'<>]+)\\b",
+      "\\b(www\\.[^\\s\"'<>]+)\\b",
+      "\\b(\\w[\\w.+-]*@[\\w.-]+\\.[a-z]{2,6})\\b",
+      "@([a-z0-9]+)"
+    ];
     re = new RegExp(re.join('|'), 'gi');
-    return string.replace(re, (match, url, www, mail) => {
+    return string.replace(re, (match, url, www, mail, username) => {
       if (url) {
         return '<a href="' + url + '" target="_blank">' + url + '</a>';
       }
@@ -13,6 +21,12 @@ UI.registerHelper('simpleFormat', (text) => {
       }
       if (mail) {
         return '<a href="mailto:' + mail + '">' + mail + '</a>';
+      }
+      if (username) {
+        if (Meteor.user().username === username) {
+          return '<span class="highlight-username">@' + username + '</span>';
+        }
+        return '@' + username;
       }
       return match;
     });
@@ -38,3 +52,5 @@ UI.registerHelper('formatDate', (date) => {
 UI.registerHelper('fullTimeDate', (date) => {
   return moment(date).format('HH:mm:ss, LL');
 });
+
+Template.registerHelper('instance', () => Template.instance());
